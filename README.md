@@ -1,7 +1,7 @@
 # StateAnimator
 
 ## Purpose
-An example to demonstrate that complex animations can be expressed and composed unsing a simple API. 
+An example to demonstrate that complex animations can be expressed and composed unsing a simple API, in Swift. 
 
 ## How does it work? 
 
