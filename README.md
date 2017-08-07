@@ -11,7 +11,6 @@ The fundamental idea is that the states of the component are made up of the stat
 State_1 = Subcomp_1_state_1 + Subcomp_2_state_1 + ...
 
 State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ...
-...
 
 "+" denotes composition.
 
@@ -30,7 +29,8 @@ struct Transition {
 }
 ```
 
-A __Subcomponent State__ is defined by a 'Transition' object. A __Component State__ is defined by an array of 'Transition' objects. 
+A __Subcomponent State__ is defined by a 'Transition' object.
+A __Component State__ is defined by an array of 'Transition' objects. 
 
 Subcomponent State Example: 
 ```swift
@@ -109,6 +109,8 @@ __Animators__ can then be used to animate the transition between states. Here is
 ```
 
 Whenever a transition is necessary the animateToState method is called. 
+
+For more information please consult the code.
 
 # Installation
 
