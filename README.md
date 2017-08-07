@@ -8,8 +8,9 @@ An example to demonstrate that complex animations can be expressed and composed 
 ### Basic idea
 The fundamental idea is that the states of the component are made up of the states of the subcomponents. Thus to define a component state, one needs to define the state of its subcomponents. Example:
 
-State_1 = Subcomp_1_state_1 + Subcomp_2_state_1 + ... 
-State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ... 
+State_1 = Subcomp_1_state_1 + Subcomp_2_state_1 + ...
+
+State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ...
 ...
 
 "+" denotes composition.
@@ -45,17 +46,15 @@ struct Animator {
 Animators can then be used to animate the transition between states. Here is some sample code of how that is done. 
 
 ```
-func generateState(state: ComponentState) -> [Transition]{
+    func generateState(state: ComponentState) -> [Transition]{
         
         switch state {
         case .collapsed:
-            return self.label_setCollapsed(currentState: currentState) + self.textView_setCollapsed(currentState: currentState)
+            return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
         case .expanded:
-            return self.label_setExpanded(currentState: currentState) + self.textView_setExpanded(currentState: currentState)
+            return self.firstView_setExpanded(currentState: currentState) + self.secondView_setExpanded(currentState: currentState)
         case .fullyExpanded:
-            return self.label_setFullyExpanded(currentState: currentState, completion: {
-                StateAnimator.animate(animators: StateAnimator.generateAnimators(state: self.textView_setFullyExpanded(currentState: self.currentState), parentView: self))
-            })
+            return self.firstView_setFullyExpanded(currentState: currentState) + self.secondView_setFullyExpanded(currentState: currentState)
         case .notSet:
             return []
         }
@@ -65,13 +64,13 @@ func generateState(state: ComponentState) -> [Transition]{
     //To Do: Cache animators that have already been generated.
     func generateAnimators(state: ComponentState) -> [Animator] {
         
-        return StateAnimator.generateAnimators(state: generateState(state: state), parentView: self)
+        return StateAnimator.generateAnimators(state: generateState(state: state), parentView: self.view)
     }
 func animateToState(state: ComponentState) {
         guard state != currentState else {
             return
         }
-        
+    
         StateAnimator.animate(animators: generateAnimators(state: state))
         
         currentState = state
