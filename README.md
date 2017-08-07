@@ -1,5 +1,7 @@
 # StateAnimator
 
+![asset](https://user-images.githubusercontent.com/17644241/29022279-e8406798-7b68-11e7-8511-5f38ef99b2a7.gif)
+
 ## Purpose
 An example to demonstrate that complex animations can be expressed and composed unsing a simple API, in Swift. 
 
