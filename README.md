@@ -21,7 +21,7 @@ The transitions between these states should be animated. Therefore more informat
 
 The 'Transition' struct captures all the state and state transition information. 
 
-```
+```swift
 struct Transition {
     let beforeTransition: (() -> ())?
     let afterTransition:  (() -> ())?
@@ -30,11 +30,41 @@ struct Transition {
 }
 ```
 
-A Subcomponent State is defined by a 'Transition' object. A Component State is defined by an array of 'Transition' objects (all the states of the subcomponents). 
+A Subcomponent State is defined by a 'Transition' object. A Component State is defined by an array of 'Transition' objects. 
+
+Subcomponent State Example: 
+```swift
+    //return [Transition] for easy composition like: [Transition] + [Transition]
+    func firstView_setCollapsed(currentState: ComponentState) -> [Transition] {
+        
+        let transition = Transition(endState: {
+            self.firstView.snp.remakeConstraints({ (make) in
+               //...
+            })
+            
+            self.firstView.layer. ... = ...
+       
+        }, animationDetails: AnimationDetails(duration: 0.2, curve: .easeOut))
+        
+        return [transition]
+    }
+```
+
+Component State Example: 
+
+```swift
+    func generateState(state: ComponentState) -> [Transition]{
+        
+        switch state {
+        case .collapsed:
+            return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
+        ...
+    }
+```
 
 Component States, that is arrays of transitions, are then converted to Animators. 
 
-```
+```swift
 struct Animator {
     let beforeTransitions: [() -> ()]
     let propertyAnimator: UIViewPropertyAnimator
@@ -45,9 +75,8 @@ struct Animator {
 
 Animators can then be used to animate the transition between states. Here is some sample code of how that is done. 
 
-```
+```swift
     func generateState(state: ComponentState) -> [Transition]{
-        
         switch state {
         case .collapsed:
             return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
@@ -61,12 +90,12 @@ Animators can then be used to animate the transition between states. Here is som
         
     }
     
-    //To Do: Cache animators that have already been generated.
     func generateAnimators(state: ComponentState) -> [Animator] {
         
         return StateAnimator.generateAnimators(state: generateState(state: state), parentView: self.view)
     }
-func animateToState(state: ComponentState) {
+    
+    func animateToState(state: ComponentState) {
         guard state != currentState else {
             return
         }
