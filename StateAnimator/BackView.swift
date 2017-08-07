@@ -158,7 +158,7 @@ class BackView: UIView {
         setConstraints()
     }
     
-    func generateState(state: ComponentState) -> [Transition]{
+    func generateState(state: ComponentState) -> [Transition] {
         
         switch state {
         case .collapsed:

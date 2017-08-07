@@ -87,17 +87,14 @@ class ViewController: UIViewController {
                 make.center.equalTo(self.view)
                 make.height.equalTo(self.view.bounds.height/1.8)
                 make.width.equalTo(self.view.bounds.width * 3/4)
-                
-                self.secondView.layer.cornerRadius = 4
-                
             })
+            
+            self.secondView.layer.cornerRadius = 4
+            self.secondView.animateToState(state: .collapsed)
+            
         }, animationDetails: AnimationDetails(duration: 0.22, curve: .linear))
         
-        let t2 = Transition(endState: {
-            self.secondView.animateToState(state: .collapsed)
-        }, animationDetails: AnimationDetails(duration: 0.0, curve: .linear))
-        
-        return [transition, t2]
+        return [transition]
     }
     
     func secondView_setExpanded(currentState: ComponentState) -> [Transition] {
@@ -110,14 +107,11 @@ class ViewController: UIViewController {
             })
             
             self.secondView.layer.cornerRadius = 10
+            self.secondView.animateToState(state: .expanded)
             
         }, animationDetails: AnimationDetails(duration: 0.2, curve: .easeInOut))
         
-        let t2 = Transition(endState: {
-            self.secondView.animateToState(state: .expanded)
-        }, animationDetails: AnimationDetails(duration: 0.0, curve: .easeInOut))
-        
-        return [transition, t2]
+        return [transition]
     }
     
     func secondView_setFullyExpanded(currentState: ComponentState) -> [Transition] {
@@ -129,16 +123,11 @@ class ViewController: UIViewController {
             })
             
             self.secondView.layer.cornerRadius = 0
-            
             self.secondView.animateToState(state: .fullyExpanded)
             
         }, animationDetails: AnimationDetails(duration: 0.2, curve: .easeInOut))
         
-        let t2 = Transition(endState: {
-            self.secondView.animateToState(state: .fullyExpanded)
-        }, animationDetails: AnimationDetails(duration: 0.0, curve: .easeInOut))
-        
-        return [transition,t2]
+        return [transition]
     }
     
     
