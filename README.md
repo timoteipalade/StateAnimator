@@ -34,34 +34,34 @@ A __Component State__ is defined by an array of 'Transition' objects.
 
 Subcomponent State Example: 
 ```swift
-    //return [Transition] for easy composition like: [Transition] + [Transition]
-    func firstView_setCollapsed(currentState: ComponentState) -> [Transition] {
+//return [Transition] for easy composition like: [Transition] + [Transition]
+func firstView_setCollapsed(currentState: ComponentState) -> [Transition] {
         
-        let transition = Transition(endState: {
-            self.firstView.snp.remakeConstraints({ (make) in
-               //...
-            })
+    let transition = Transition(endState: {
+        self.firstView.snp.remakeConstraints({ (make) in
+           //...
+        })
             
-            self.firstView.layer. ... = ...
+        self.firstView.layer. ... = ...
        
-        }, animationDetails: AnimationDetails(duration: 0.2, curve: .easeOut))
+    }, animationDetails: AnimationDetails(duration: 0.2, curve: .easeOut))
         
-        return [transition]
-    }
+    return [transition]
+}
 ```
 
 Component State Example: 
 
 ```swift
-    func generateState(state: ComponentState) -> [Transition]{
+func generateState(state: ComponentState) -> [Transition]{
         
-        switch state {
-        case .collapsed:
-            //self.firstView_setCollapsed(currentState: currentState) returns [Transition]
-            //so does self.secondView_setCollapsed(currentState: currentState) 
-            return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
-        ...
-    }
+    switch state {
+    case .collapsed:
+        //self.firstView_setCollapsed(currentState: currentState) returns [Transition]
+        //so does self.secondView_setCollapsed(currentState: currentState) 
+        return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
+    ...
+}
 ```
 
 __Component States__, that is arrays of transitions, are then converted to __Animators__. 
@@ -78,34 +78,32 @@ struct Animator {
 __Animators__ can then be used to animate the transition between states. Here is some sample code of how that is done. 
 
 ```swift
-    func generateState(state: ComponentState) -> [Transition]{
-        switch state {
-        case .collapsed:
-            return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
-        case .expanded:
-            return self.firstView_setExpanded(currentState: currentState) + self.secondView_setExpanded(currentState: currentState)
-        case .fullyExpanded:
-            return self.firstView_setFullyExpanded(currentState: currentState) + self.secondView_setFullyExpanded(currentState: currentState)
-        case .notSet:
-            return []
+func generateState(state: ComponentState) -> [Transition]{
+    switch state {
+    case .collapsed:
+        return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
+    case .expanded:
+        return self.firstView_setExpanded(currentState: currentState) + self.secondView_setExpanded(currentState: currentState)
+    case .fullyExpanded:
+        return self.firstView_setFullyExpanded(currentState: currentState) + self.secondView_setFullyExpanded(currentState: currentState)
+    case .notSet:
+        return []
         }
-        
     }
     
-    func generateAnimators(state: ComponentState) -> [Animator] {
-        
-        return StateAnimator.generateAnimators(state: generateState(state: state), parentView: self.view)
+func generateAnimators(state: ComponentState) -> [Animator] {
+    return StateAnimator.generateAnimators(state: generateState(state: state), parentView: self.view)
+}
+    
+func animateToState(state: ComponentState) {
+    guard state != currentState else {
+        return
     }
     
-    func animateToState(state: ComponentState) {
-        guard state != currentState else {
-            return
-        }
-    
-        StateAnimator.animate(animators: generateAnimators(state: state))
+    StateAnimator.animate(animators: generateAnimators(state: state))
         
-        currentState = state
-    }
+    currentState = state
+}
 ```
 
 Whenever a transition is necessary the animateToState method is called. 
