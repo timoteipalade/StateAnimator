@@ -30,7 +30,7 @@ struct Transition {
 }
 ```
 
-A Subcomponent State is defined by a 'Transition' object. A Component State is defined by an array of 'Transition' objects. 
+A __Subcomponent State__ is defined by a 'Transition' object. A __Component State__ is defined by an array of 'Transition' objects. 
 
 Subcomponent State Example: 
 ```swift
@@ -57,12 +57,14 @@ Component State Example:
         
         switch state {
         case .collapsed:
+            //self.firstView_setCollapsed(currentState: currentState) returns [Transition]
+            //so does self.secondView_setCollapsed(currentState: currentState) 
             return self.firstView_setCollapsed(currentState: currentState) + self.secondView_setCollapsed(currentState: currentState)
         ...
     }
 ```
 
-Component States, that is arrays of transitions, are then converted to Animators. 
+__Component States__, that is arrays of transitions, are then converted to __Animators__. 
 
 ```swift
 struct Animator {
@@ -73,7 +75,7 @@ struct Animator {
 
 (This particular implementation uses the UIViewPropertyAnimator to handle the actual animations.)
 
-Animators can then be used to animate the transition between states. Here is some sample code of how that is done. 
+__Animators__ can then be used to animate the transition between states. Here is some sample code of how that is done. 
 
 ```swift
     func generateState(state: ComponentState) -> [Transition]{
@@ -106,8 +108,7 @@ Animators can then be used to animate the transition between states. Here is som
     }
 ```
 
-
-
+Whenever a transition is necessary the animateToState method is called. 
 
 # Installation
 
