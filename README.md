@@ -7,7 +7,20 @@ An example to demonstrate that complex animations can be expressed and composed 
 
 ## How does it work? 
 
+### Some Definitions
+
+A __Component__ is UIView that contains subviews.
+
+A __Subcomponent__ is subview of the __Component__.
+
+Simple example: 
+
+__Component__: UIButton.
+
+__Subcomponent__: UILabel containing the title of the button.
+
 ### Basic idea
+
 The fundamental idea is that the states of the component are made up of the states of the subcomponents. Thus to define a component state, one needs to define the state of its subcomponents. Example:
 
 State_1 = Subcomp_1_state_1 + Subcomp_2_state_1 + ...
@@ -18,7 +31,7 @@ State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ...
 
 The transitions between these states should be animated. Therefore more information, than just the state is required. Animation details are also required. 
 
-### Implementation details
+## Implementation details
 
 The 'Transition' struct captures all the state and state transition information. 
 
@@ -30,8 +43,9 @@ struct Transition {
     let animationDetails: AnimationDetails
 }
 ```
-
+### Some Definitions 
 A __Subcomponent State__ is defined by a 'Transition' object.
+
 A __Component State__ is defined by an array of 'Transition' objects. 
 
 Subcomponent State Example: 
@@ -116,8 +130,16 @@ For more information please consult the code.
 
 Requires cocoapods. Run ```pod install```
 
+# Requirements
+
+iOS 10
+
 # Image Links
 
 New York: http://wallpaperswide.com/new_york_city_buildings-wallpapers.html
 
 Background: http://www.idownloadblog.com/2014/09/10/new-ios-8-wallpapers/
+
+# License
+
+MIT License
