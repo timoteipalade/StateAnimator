@@ -7,15 +7,9 @@ More complex animations between the states of a component, like a button, can be
 
 ## How does it work? 
 
-### Some Definitions
-
-A __Component__ is a View that contains subviews. (i.e Button)
-
-A __Subcomponent__ is subview of the __Component__. (i.e Label of a Button)
-
 ### Basic idea
 
-The states of a __Component__ are made up of the states of its __Subcomponents__. Thus to define a __Component__ state, one needs to define the states of its __Subcomponents__.
+The states of a __View__ are made up of the states of its __Subviews__. For example, think of the states of a button. One state can have a blue label, and a black outer border, while another state of the same button can have a red label and a white outer border. In a more mathematical notation that would translate to:
 
 State_1 = Subcomp_1_state_1 + Subcomp_2_state_1 + ...
 
@@ -23,10 +17,9 @@ State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ...
 
 "+" denotes composition.
 
-### More Definitions 
-A __Subcomponent__ state is defined by a 'Transition' struct.
+We need a way to encapsulate this information. What is there to encapsulate? Well first it would be the information about each subview for a certain view state. And then we need to put those bits together to form a state for the view. 
 
-A __Component__ state is defined by a collection of 'Transition' structs. 
+I chose to encapsulate the information about a subview in a 'Transition' struct:
 
 The 'Transition' struct looks like this:
 
@@ -39,9 +32,18 @@ struct Transition {
 }
 ```
 
-Once two __Component__ states have been defined, the transition between them can be animated. 
+The naming might be a bit confusing, I am sorry for that. The most important piece of info in a 'Transition' is the endState. The endState describes the look of that subcomponent for a certain view state. For example: If we have a view state, let's call it View_State_1, then the endState should contain the information about how that subview is supposed to look like when the view is in View_State_1. 
 
-Before the animation takes place, each __Component__ state needs to be converted into an __Animator__.
+Once the subview states are defined for a certain view state, then we can put them together to describe the state of the view. So we can form a collection of 'Transition' structs and call that the view state. Maybe a bit of notation will make it clearer: 
+
+Subview_State_1 = Transition1
+Subview_State_2 = Transition2
+
+View_State = [Transition1, Transition2]
+
+Once we have 2 view states, say View_State_1 and View_State_2, we can animate the transition between View_State_1 and View_State_2. 
+
+Before the animation takes place, each view state needs to be converted into an __Animator__. This is an internal detail, which should be hidden in the future. But it is good to know about it if you want to understand how this works.
 
 ```swift
 struct Animator {
