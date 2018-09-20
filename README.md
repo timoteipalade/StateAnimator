@@ -4,6 +4,7 @@
 
 ## Purpose
 An example to demonstrate that complex animations can be expressed and composed unsing a simpler API, in Swift. 
+Note: Explain the problem that it solves.
 
 ## How does it work? 
 
