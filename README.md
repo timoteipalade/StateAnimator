@@ -17,11 +17,9 @@ State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ...
 
 "+" denotes composition.
 
-We need a way to encapsulate this information. What is there to encapsulate? Well first it would be the information about each subview for a certain view state. And then we need to put those bits together to form a state for the view. 
+We need a way to encapsulate this information. What is there to encapsulate? First, the information about each __Subviews__ for a certain __View__ state. And then the information about a __View__ state. 
 
-I chose to encapsulate the information about a subview in a 'Transition' struct:
-
-The 'Transition' struct looks like this:
+I chose to encapsulate the information about a __Subviews__ in a 'Transition' struct:
 
 ```swift
 struct Transition {
@@ -32,18 +30,18 @@ struct Transition {
 }
 ```
 
-The naming might be a bit confusing, I am sorry for that. The most important piece of info in a 'Transition' is the endState. The endState describes the look of that subcomponent for a certain view state. For example: If we have a view state, let's call it View_State_1, then the endState should contain the information about how that subview is supposed to look like when the view is in View_State_1. 
+The naming might be a bit confusing, I am sorry for that. The most important piece of info in a 'Transition' is the endState. The endState describes the look of that subcomponent for a certain __View__ state. For example: If we have a __View__ state, let's call it View_State_1, then the endState should contain the information about how that __Subviews__ is supposed to look like when the view is in View_State_1. 
 
-Once the subview states are defined for a certain view state, then we can put them together to describe the state of the view. So we can form a collection of 'Transition' structs and call that the view state. Maybe a bit of notation will make it clearer: 
+Once the __Subviews__ states are defined for a certain __View__ state, then we can put them together to describe the state of the __View__. So we can form a collection of 'Transition' structs and call that the __View__ state. Maybe a bit of notation will make it clearer: 
 
 Subview_State_1 = Transition1
 Subview_State_2 = Transition2
 
 View_State = [Transition1, Transition2]
 
-Once we have 2 view states, say View_State_1 and View_State_2, we can animate the transition between View_State_1 and View_State_2. 
+Once we have 2 __View__ states, say View_State_1 and View_State_2, we can animate the transition between View_State_1 and View_State_2. 
 
-Before the animation takes place, each view state needs to be converted into an __Animator__. This is an internal detail, which should be hidden in the future. But it is good to know about it if you want to understand how this works.
+Before the animation takes place, each __View__ state needs to be converted into an __Animator__. This is an internal detail, which should be hidden in the future. But it is good to know about it if you want to understand how this works.
 
 ```swift
 struct Animator {
