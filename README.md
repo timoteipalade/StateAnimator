@@ -17,9 +17,9 @@ State_2 = Subcomp_1_state_2 + Subcomp_2_state_2 + ...
 
 "+" denotes composition.
 
-We need a way to encapsulate this information. What is there to encapsulate? First, the information about each __Subviews__ for a certain __View__ state. And then the information about a __View__ state. 
+We need a way to encapsulate this information. What is there to encapsulate? First, the information about each __Subview__ for a certain __View__ state. And then the information about a __View__ state. 
 
-I chose to encapsulate the information about a __Subviews__ in a 'Transition' struct:
+I chose to encapsulate the information about a __Subview__ in a 'Transition' struct:
 
 ```swift
 struct Transition {
@@ -30,9 +30,9 @@ struct Transition {
 }
 ```
 
-The naming might be a bit confusing, I am sorry for that. The most important piece of info in a 'Transition' is the endState. The endState describes the look of that subcomponent for a certain __View__ state. For example: If we have a __View__ state, let's call it View_State_1, then the endState should contain the information about how that __Subviews__ is supposed to look like when the view is in View_State_1. 
+The naming might be a bit confusing, I am sorry for that. The most important piece of info in a 'Transition' is the endState. The endState describes the look of that subcomponent for a certain __View__ state. For example: If we have a __View__ state, let's call it View_State_1, then the endState should contain the information about how that __Subview__ is supposed to look like when the view is in View_State_1. 
 
-Once the __Subviews__ states are defined for a certain __View__ state, then we can put them together to describe the state of the __View__. So we can form a collection of 'Transition' structs and call that the __View__ state. Maybe a bit of notation will make it clearer: 
+Once the __Subview__ states are defined for a certain __View__ state, then we can put them together to describe the state of the __View__. So we can form a collection of 'Transition' structs and call that the __View__ state. Maybe a bit of notation will make it clearer: 
 
 Subview_State_1 = Transition1
 Subview_State_2 = Transition2
