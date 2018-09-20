@@ -54,6 +54,10 @@ __Animators__ are then passed to the __StateAnimator__, who starts the animation
 
 For more information please consult the code.
 
+# Downsides
+
+Too much boilerplate is needed to do this.
+
 # Installation
 
 Requires cocoapods. Run ```pod install```
