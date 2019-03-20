@@ -35,6 +35,7 @@ The naming might be a bit confusing, I am sorry for that. The most important pie
 Once the __Subview__ states are defined for a certain __View__ state, then we can put them together to describe the state of the __View__. So we can form a collection of 'Transition' structs and call that the __View__ state. Maybe a bit of notation will make it clearer: 
 
 Subview_State_1 = Transition1
+
 Subview_State_2 = Transition2
 
 View_State = [Transition1, Transition2]
